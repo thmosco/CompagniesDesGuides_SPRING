@@ -1,4 +1,4 @@
-package compaguides.CompagnieDesGuides.controllers;
+package compaguides.CompagnieDesGuides;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +23,9 @@ public class AccueilController {
 	@Autowired
 	private ApplicationContext context;
 	
-	@GetMapping("/")
+	@RequestMapping({"/", "index"})
 	public ModelAndView all() {
+		System.out.println("rando");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index");
 		return mav;

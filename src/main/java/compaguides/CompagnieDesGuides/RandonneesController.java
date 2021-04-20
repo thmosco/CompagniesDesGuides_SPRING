@@ -1,4 +1,4 @@
-package compaguides.CompagnieDesGuides.controllers;
+package compaguides.CompagnieDesGuides;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,28 +15,30 @@ import compaguides.CompagniesDesGuides.model.RandonneesRepository;
 
 @RestController
 public class RandonneesController {
+	
 	@Autowired
-	private RandonneesRepository randonneesrepository;
+	private RandonneesRepository randonneesRepository;
 	@Autowired
 	private ApplicationContext context;
 	
 	@GetMapping("/randonnees")
-	public ModelAndView all() {
+	public ModelAndView mesRandonnees() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("randonnees",randonneesrepository.findAll());
+		System.out.println("rando");
+		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.setViewName("randonnees-all");
 		return mav;	
 	}
 	
 	@RequestMapping("/randonnees-delete/{id}")
 	public ModelAndView delete(@PathVariable int id) {
-		randonneesrepository.deleteById(id);
-		return new ModelAndView("redirect:/employes");
+		randonneesRepository.deleteById(id);
+		return new ModelAndView("redirect:/randonnees");
 	}
 	@GetMapping("/randonnees/{id}")
 	public ModelAndView get(@PathVariable int id) {
 		//Récuperer l'employé
-		Optional<RandonneesModel> e = randonneesrepository.findById(id);
+		Optional<RandonneesModel> e = randonneesRepository.findById(id);
 	
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("randonnees", e);
