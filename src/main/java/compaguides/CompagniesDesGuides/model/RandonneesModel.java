@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity //Indique à Hibernate que cette correspondra à une table dans la base de données
@@ -25,8 +27,10 @@ public class RandonneesModel {
 	@Column(name="dateFin_Randonnees")
 	String date_fin;
 	
+	@ManyToOne
+	@MapsId("code_Guides")
 	@Column(name="code_Guides")
-	int code_guide;
+	GuidesModel guide;
 
 	public int getId() {
 		return id;
@@ -60,18 +64,18 @@ public class RandonneesModel {
 		this.date_fin = date_fin;
 	}
 
-	public int getCode_guide() {
-		return code_guide;
+	public GuidesModel get_guide() {
+		return guide;
 	}
-
-	public void setCode_guide(int code_guide) {
-		this.code_guide = code_guide;
+	
+	public void set_guide(GuidesModel guide) {
+		this.guide = guide;
 	}
 
 	@Override
 	public String toString() {
 		return "RandonneesModel [id=" + id + ", nombres_personnes=" + nombres_personnes + ", date_debut=" + date_debut
-				+ ", date_fin=" + date_fin + ", code_guide=" + code_guide + "]";
+				+ ", date_fin=" + date_fin  + "]";
 	}
 
 	
