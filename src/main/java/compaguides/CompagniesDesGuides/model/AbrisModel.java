@@ -1,10 +1,13 @@
 package compaguides.CompagniesDesGuides.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity //Indique à Hibernate que cette correspondra à une table dans la base de données
@@ -36,6 +39,17 @@ public class AbrisModel {
 	
 	@Column(name="code_Vallees")
 	int code_vallee;
+	
+	@OneToMany(mappedBy="abris")
+	Set<AscensionsModel> ascensions;
+
+	public Set<AscensionsModel> getAscensions() {
+		return ascensions;
+	}
+
+	public void setAscensions(Set<AscensionsModel> ascensions) {
+		this.ascensions = ascensions;
+	}
 
 	public int getId() {
 		return id;
