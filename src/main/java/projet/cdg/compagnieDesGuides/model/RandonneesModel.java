@@ -1,6 +1,7 @@
 package projet.cdg.compagnieDesGuides.model;
 
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -34,6 +36,36 @@ public class RandonneesModel {
 	
 	@Column(name="code_Guides")
 	int guide;
+	
+	@OneToMany(mappedBy="randonnees")
+	Set<ReserverModel> reserver;
+	
+	@OneToMany(mappedBy="abris")
+	Set<ConcernerModel> concerner;
+
+	public int getGuide() {
+		return guide;
+	}
+
+	public void setGuide(int guide) {
+		this.guide = guide;
+	}
+
+	public Set<ReserverModel> getReserver() {
+		return reserver;
+	}
+
+	public void setReserver(Set<ReserverModel> reserver) {
+		this.reserver = reserver;
+	}
+
+	public Set<ConcernerModel> getConcerner() {
+		return concerner;
+	}
+
+	public void setConcerner(Set<ConcernerModel> concerner) {
+		this.concerner = concerner;
+	}
 
 	public int getId() {
 		return id;

@@ -42,6 +42,17 @@ public class AbrisModel {
 	
 	@OneToMany(mappedBy="abris")
 	Set<AscensionsModel> ascensions;
+	
+	@OneToMany(mappedBy="abris")
+	Set<ReserverModel> reserver;
+
+	public Set<ReserverModel> getReserver() {
+		return reserver;
+	}
+
+	public void setReserver(Set<ReserverModel> reserver) {
+		this.reserver = reserver;
+	}
 
 	public Set<AscensionsModel> getAscensions() {
 		return ascensions;

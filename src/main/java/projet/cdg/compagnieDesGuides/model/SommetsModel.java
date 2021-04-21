@@ -28,6 +28,17 @@ public class SommetsModel {
 	@OneToMany(mappedBy="sommets")
 	Set<AscensionsModel> ascensions;
 
+	@OneToMany(mappedBy="sommets")
+	Set<ConcernerModel> concerner;
+	
+	public Set<ConcernerModel> getConcerner() {
+		return concerner;
+	}
+
+	public void setConcerner(Set<ConcernerModel> concerner) {
+		this.concerner = concerner;
+	}
+
 	public Set<AscensionsModel> getAscensions() {
 		return ascensions;
 	}

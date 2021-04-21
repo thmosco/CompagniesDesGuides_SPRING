@@ -1,4 +1,4 @@
-package projet.cdg.compagnieDesGuides.model;
+ package projet.cdg.compagnieDesGuides.model;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
