@@ -9,6 +9,7 @@
 <body>
 <h1>Bienvenue sur la compagnie des guides</h1>
 
+<a href="randonnees/vallees">Ajouter une randonnées à partir d'une vallée</a>
 <a href="sommets">Voir les sommets</a>
 <a href="randonnees">Voir mes randonnées</a>
 

@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,22 +32,26 @@ public class AbrisModel {
 	int altitude;
 	
 	@Column(name="prixNuit_Abris")
-	Double prix_nuit;
+	Float prix_nuit;
 
 	@Column(name="prixRepas_Abris")
-	Double prix_repas;
+	Float prix_repas;
 	
 	@Column(name="telGardien_Abris")
-	Double tel_gardien;
+	Integer tel_gardien;
 	
-	@Column(name="code_Vallees")
-	int code_vallee;
-	
+	@OneToMany
+	Set<ValleesModel> vallee;
+
 	@OneToMany(mappedBy="abris")
 	Set<AscensionsModel> ascensions;
 	
 	@OneToMany(mappedBy="abris")
 	Set<ReserverModel> reserver;
+	
+	public Set<ValleesModel> getVallee() {
+		return vallee;
+	}
 
 	public Set<ReserverModel> getReserver() {
 		return reserver;
@@ -52,6 +59,10 @@ public class AbrisModel {
 
 	public void setReserver(Set<ReserverModel> reserver) {
 		this.reserver = reserver;
+	}
+
+	public void setVallee(Set<ValleesModel> vallee) {
+		this.vallee = vallee;
 	}
 
 	public Set<AscensionsModel> getAscensions() {
@@ -94,43 +105,43 @@ public class AbrisModel {
 		this.altitude = altitude;
 	}
 
-	public Double getPrix_nuit() {
+	public Float getPrix_nuit() {
 		return prix_nuit;
 	}
 
-	public void setPrix_nuit(Double prix_nuit) {
+	public void setPrix_nuit(Float prix_nuit) {
 		this.prix_nuit = prix_nuit;
 	}
 
-	public Double getPrix_repas() {
+	public Float getPrix_repas() {
 		return prix_repas;
 	}
 
-	public void setPrix_repas(Double prix_repas) {
+	public void setPrix_repas(Float prix_repas) {
 		this.prix_repas = prix_repas;
 	}
 
-	public Double getTel_gardien() {
+	public Integer getTel_gardien() {
 		return tel_gardien;
 	}
 
-	public void setTel_gardien(Double tel_gardien) {
+	public void setTel_gardien(Integer tel_gardien) {
 		this.tel_gardien = tel_gardien;
 	}
 
-	public int getCode_vallee() {
-		return code_vallee;
+	public Set<ValleesModel> getVallees() {
+		return vallee;
 	}
 
-	public void setCode_vallee(int code_vallee) {
-		this.code_vallee = code_vallee;
+	public void setCode_vallee(Set<ValleesModel> code_vallee) {
+		this.vallee = code_vallee;
 	}
 
 	@Override
 	public String toString() {
 		return "AbrisModel [id=" + id + ", nom_abris=" + nom_abris + ", type_abris=" + type_abris + ", altitude="
 				+ altitude + ", prix_nuit=" + prix_nuit + ", prix_repas=" + prix_repas + ", tel_gardien=" + tel_gardien
-				+ ", code_vallee=" + code_vallee + "]";
+				+ ", code_vallee=" + vallee + "]";
 	}
 	
 	

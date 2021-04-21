@@ -1,8 +1,12 @@
 package projet.cdg.compagnieDesGuides.keys;
 
-import javax.persistence.Column;
+import java.io.Serializable;
 
-public class ReserverKey {
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class ReserverKey implements Serializable {
 	@Column(name = "code_Abris")
     int code_Abris;
 

@@ -14,7 +14,6 @@ public class AscensionKey implements Serializable {
     @Column(name = "code_Abris")
     int code_abris;
 
-	
 
 	public int getCode_sommet() {
 		return code_sommet;

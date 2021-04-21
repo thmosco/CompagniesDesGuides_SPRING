@@ -5,13 +5,16 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 import projet.cdg.compagnieDesGuides.keys.ReserverKey;
 
-
+@Entity //Indique Ã  Hibernate que cette correspondra Ã  une table dans la base de donnÃ©es
+@Table(name="reserver") //Indique la table de la BDD correspondant au modÃ¨le
 public class ReserverModel {
 	@EmbeddedId
 	ReserverKey id;
@@ -19,12 +22,12 @@ public class ReserverModel {
 	@ManyToOne
 	@MapsId("code_Randonnees")
 	@JoinColumn(name="code_Randonnees")
-	Set<RandonneesModel> randonnees;
+	RandonneesModel randonnees;
 	
 	@ManyToOne
 	@MapsId("code_Abris")
 	@JoinColumn(name="code_Abris")
-	Set<AbrisModel> abris;
+	AbrisModel abris;
 	
 	@Column(name="date_Reserver")
 	Date date_Reserver;
@@ -32,19 +35,19 @@ public class ReserverModel {
 	@Column(name="statut_Reserver")
 	String statut_Reserver;
 
-	public Set<RandonneesModel> getRandonnees() {
+	public RandonneesModel getRandonnees() {
 		return randonnees;
 	}
 
-	public void setRandonnees(Set<RandonneesModel> randonnees) {
+	public void setRandonnees(RandonneesModel randonnees) {
 		this.randonnees = randonnees;
 	}
 
-	public Set<AbrisModel> getAbris() {
+	public AbrisModel getAbris() {
 		return abris;
 	}
 
-	public void setAbris(Set<AbrisModel> abris) {
+	public void setAbris(AbrisModel abris) {
 		this.abris = abris;
 	}
 

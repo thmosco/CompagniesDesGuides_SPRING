@@ -40,7 +40,7 @@ public class RandonneesModel {
 	@OneToMany(mappedBy="randonnees")
 	Set<ReserverModel> reserver;
 	
-	@OneToMany(mappedBy="abris")
+	@OneToMany(mappedBy="randonnees")
 	Set<ConcernerModel> concerner;
 
 	public int getGuide() {
