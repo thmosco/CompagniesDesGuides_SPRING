@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import projet.cdg.compagnieDesGuides.repository.AbrisRepository;
+import projet.cdg.compagnieDesGuides.repository.AscensionsRepository;
+import projet.cdg.compagnieDesGuides.repository.SommetsRepository;
 import projet.cdg.compagnieDesGuides.repository.ValleesRepository;
 
 import java.util.Optional;
@@ -21,7 +22,10 @@ public class ValleesController {
 	private ValleesRepository valleeRepository;
 	
 	@Autowired
-	private AbrisRepository abrisRepository;
+	private SommetsRepository sommetsRepository;
+	
+	@Autowired
+	private AscensionsRepository ascensionsRepository;
 	
 	@Autowired
 	private ApplicationContext context;
@@ -39,7 +43,10 @@ public class ValleesController {
 	public ModelAndView choisirAbrisSommetParVallee(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("abris",abrisRepository.findAbrisByValleeId(id));
+		mav.addObject("sommets",sommetsRepository.findSommetsByVallee(id));
+		
+		mav.addObject("ascensions",ascensionsRepository.findAscensionsByValleesId(id));
+		
 		mav.setViewName("sommets-par-vallees");
 		return mav;	
 	}
