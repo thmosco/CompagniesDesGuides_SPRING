@@ -1,10 +1,16 @@
 package projet.cdg.compagnieDesGuides.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity //Indique à Hibernate que cette correspondra à une table dans la base de données
@@ -18,7 +24,7 @@ public class ValleesModel {
 	
 	@Column(name="nom_vallees")
 	String nom;
-
+	
 	public int getId() {
 		return id;
 	}
@@ -34,7 +40,7 @@ public class ValleesModel {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
+	
 @Override
 	public String toString() {
 		return "ValleesModel [id=" + id + ", nom=" + nom + "]";
