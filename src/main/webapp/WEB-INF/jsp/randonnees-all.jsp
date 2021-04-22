@@ -59,8 +59,8 @@
 				out.print("<br>");
 			}
 			out.print("</td>");
-			out.print("<td><a href='employes-update-form/"+r.getId()+"'>Modifier</a></td>");
-			out.print("<td><a href='employes-delete/"+r.getId()+"'>Effacer</a></td>");
+			out.print("<td><a href='randonnees-update-form/"+r.getId()+"'>Modifier</a></td>");
+			out.print("<td><a href='randonnees-delete/"+r.getId()+"'>Effacer</a></td>");
 			out.print("<tr>");
 		}
 	%>

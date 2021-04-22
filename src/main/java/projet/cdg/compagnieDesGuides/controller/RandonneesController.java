@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import projet.cdg.compagnieDesGuides.model.RandonneesModel;
 import projet.cdg.compagnieDesGuides.model.AbrisModel;
 import projet.cdg.compagnieDesGuides.model.RandonneesModel;
 import projet.cdg.compagnieDesGuides.model.SommetsModel;
@@ -37,12 +38,14 @@ public class RandonneesController {
 	@Autowired
 	private ApplicationContext context;
 	
-	@GetMapping("/randonnees")
-	public ModelAndView mesRandonnees() {
+	@GetMapping("/randonnees-update-form/{id}")
+	public ModelAndView randonneesModif(@PathVariable int id) {
+		RandonneesModel r = randonneesRepository.findById(id).get();
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.setViewName("randonnees-all");
+		mav.addObject("randonnees",r);
+		mav.addObject("randonnees1",randonneesRepository.findById(id));
+		mav.setViewName("randonnees-update-form");
 		return mav;	
 	}
 	
@@ -89,6 +92,14 @@ public class RandonneesController {
 		//mav.addObject("randonnees",randonneesRepository.findAll());
 		//mav.setViewName("randonnees-all");
 		//return mav;	
+	}
+	@GetMapping("/randonnees")
+	public ModelAndView mesRandonnees() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("randonnees",randonneesRepository.findAll());
+		mav.setViewName("randonnees-all");
+		return mav;	
 	}
 	
 	@PostMapping("/randonnees/creation")
