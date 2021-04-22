@@ -34,8 +34,9 @@ public class RandonneesModel {
 	@Column(name="dateFin_Randonnees")
 	String date_fin;
 	
-	@Column(name="code_Guides")
-	int guide;
+	@ManyToOne
+	@JoinColumn(name="code_Guides",nullable=false)
+	GuidesModel guide;
 	
 	@OneToMany(mappedBy="randonnees")
 	Set<ReserverModel> reserver;
@@ -43,11 +44,11 @@ public class RandonneesModel {
 	@OneToMany(mappedBy="randonnees")
 	Set<ConcernerModel> concerner;
 
-	public int getGuide() {
+	public GuidesModel getGuide() {
 		return guide;
 	}
 
-	public void setGuide(int guide) {
+	public void setGuide(GuidesModel guide) {
 		this.guide = guide;
 	}
 
@@ -99,13 +100,6 @@ public class RandonneesModel {
 		this.date_fin = date_fin;
 	}
 
-	public int get_guide() {
-		return guide;
-	}
-	
-	public void set_guide(int guide) {
-		this.guide = guide;
-	}
 
 	@Override
 	public String toString() {

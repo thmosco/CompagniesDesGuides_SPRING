@@ -30,7 +30,7 @@ public class ReserverModel {
 	AbrisModel abris;
 	
 	@Column(name="date_Reserver")
-	Date date_Reserver;
+	String date_Reserver;
 	
 	@Column(name="statut_Reserver")
 	String statut_Reserver;
@@ -51,11 +51,11 @@ public class ReserverModel {
 		this.abris = abris;
 	}
 
-	public Date getDate_Reserver() {
+	public String getDate_Reserver() {
 		return date_Reserver;
 	}
 
-	public void setDate_Reserver(Date date_Reserver) {
+	public void setDate_Reserver(String date_Reserver) {
 		this.date_Reserver = date_Reserver;
 	}
 

@@ -43,13 +43,13 @@
 
 						  out.print("<p>"+a.getAbris().getNom_abris()+"</p>");
 						  out.print("<p>"+a.getAbris().getType_abris()+"</p>");
-						  out.print("<p>"+a.getAbris().getPrix_nuit()+"</p>");
+						  out.print("<p>"+a.getAbris().getPrix_nuit()+"</p>");//Les abris apparaissent en double, ne faire apparaitre que les abris de cette vallées
 						  
 						  out.print("<p>Cette abris vous est conseillez si vous faites le sommet "+a.getSommets().getNom() +"</p>");
 						  
 						  %>
 						  
-						  <input type='checkbox' name="abris" value='<% out.print(a.getAbris().getId());%>'>
+						  <input type='checkbox' name="abris" value='<% out.print(a.getAbris().getId());%>'>/
 						  
 						  </div>
 						  <% 

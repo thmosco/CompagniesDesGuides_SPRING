@@ -13,11 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import projet.cdg.compagnieDesGuides.model.RandonneesModel;
+import projet.cdg.compagnieDesGuides.model.ReserverModel;
+import projet.cdg.compagnieDesGuides.keys.ConcernerKey;
+import projet.cdg.compagnieDesGuides.keys.ReserverKey;
 import projet.cdg.compagnieDesGuides.model.AbrisModel;
+import projet.cdg.compagnieDesGuides.model.ConcernerModel;
+import projet.cdg.compagnieDesGuides.model.GuidesModel;
 import projet.cdg.compagnieDesGuides.model.RandonneesModel;
 import projet.cdg.compagnieDesGuides.model.SommetsModel;
 import projet.cdg.compagnieDesGuides.repository.AbrisRepository;
+import projet.cdg.compagnieDesGuides.repository.ConcernerRepository;
+import projet.cdg.compagnieDesGuides.repository.GuidesRepository;
 import projet.cdg.compagnieDesGuides.repository.RandonneesRepository;
+import projet.cdg.compagnieDesGuides.repository.ReserverRepository;
 import projet.cdg.compagnieDesGuides.repository.SommetsRepository;
 
 import java.text.ParseException;
@@ -25,8 +33,11 @@ import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -71,7 +82,7 @@ public class RandonneesController {
 			
 			Iterable<Integer> iterableSommets = intListSommets;
 		    
-		    mav.addObject("sommets",sommetsRepository.findAllById(intListSommets));
+		    mav.addObject("sommets",sommetsRepository.findAllById(iterableSommets));
 		  
 			String a = abris.get(0);
 			
@@ -80,11 +91,11 @@ public class RandonneesController {
 			AbrisRepository abrisRepository = (AbrisRepository) context.getBean("abrisRepository");
 		    
 			List<Integer> intListAbris = new ArrayList<Integer>();// Converti les choix en list de integer
-			for(String a1:sommets) intListAbris.add(Integer.valueOf(a1));
+			for(String a1:abris) intListAbris.add(Integer.valueOf(a1));
 			
 			Iterable<Integer> iterableAbris = intListAbris;
 		
-		    mav.addObject("abris",abrisRepository.findAllById(intListAbris));
+		    mav.addObject("abris",abrisRepository.findAllById(iterableAbris));
 		}
 			
 			mav.setViewName("randonnees-recap-creation");
@@ -115,9 +126,10 @@ public class RandonneesController {
 				String lS = sommets.get(0);
 				String dS = dateSommets.get(0);
 				
-			if(!personnes.contentEquals("null") && !debut.contentEquals("null") && !fin.contentEquals("null") && !lS.contentEquals("null")  && !dS.contentEquals("null")) {
+				String lA = abris.get(0);
+				String dA = abris.get(0);
 				
-				//&& !abris.get(0).isEmpty()  && !dateAbris.get(0).isEmpty() vérifier si les abris sont vide 
+			if(!personnes.contentEquals("null") && !debut.contentEquals("null") && !fin.contentEquals("null") && !lS.contentEquals("null")  && !dS.contentEquals("null")) {
 					String s = dateSommets.get(0);
 				
 				    Date debutDate = new Date();
@@ -135,8 +147,7 @@ public class RandonneesController {
 					    	   long diff = finDate.getTime() - debutDate.getTime();
 					    	   if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)<15) {
 					    		   if(sommets.size() == dateSommets.size()) {
-					    			
-					    			   
+					    				   
 					    			   for(String dates:dateSommets) {
 					    				   Date dateVerifSommet =  new Date();
 					    				   try {
@@ -149,14 +160,106 @@ public class RandonneesController {
 					    				   }
 					    			   }
 					    			   
+					    			   if(!lA.contentEquals("null") && !dA.contentEquals("null")) {// Je vérifie si il a des abris
+					    				   if(abris.size() == dateAbris.size()) {// je regarde si chaque abris a une date associé
+					    					   
+					    					   for(String dates:dateAbris) {// je vérifie si les date donnée correspondent aux date de la randonnées
+							    				   Date dateVerifAbris =  new Date();
+							    				   try {
+							    					  dateVerifAbris = new SimpleDateFormat("yyyy-MM-dd").parse(dates);
+												} catch (ParseException e) {
+													e.printStackTrace();
+												}
+							    				   if(dateVerifAbris.after(finDate) || dateVerifAbris.before(debutDate)) {
+							    					   return "La date d'un abris n'est pas dans la date de la randonnée";
+							    				   }
+							    			   }
+					    					   
+					    				   }else {
+					    				   	return "Il manque une date à un abris";}
+					    			   }
+					    			   Iterable<GuidesModel> guidesModel;
+					    				GuidesRepository guidesRepository = (GuidesRepository) context.getBean("guidesRepository");
+					    			   
 					    			   RandonneesModel r = new RandonneesModel();
 					    			   
-					    			   r.set_guide(1);
+					    			   r.setGuide(guidesRepository.findById(1).get());
 					    			   r.setDate_debut(debut);
 					    			   r.setDate_fin(fin);
 					    			   r.setNombres_personnes(Integer.parseInt(personnes));
 					    			   
 					    			   randonneesRepository.save(r);
+					    			   
+					    			   Iterable<SommetsModel> sommetsModel;
+					    				SommetsRepository sommetsRepository = (SommetsRepository) context.getBean("sommetsRepository");
+					    				
+					    				Iterable<ConcernerModel> concernerModel;
+					    				ConcernerRepository concernerRepository = (ConcernerRepository) context.getBean("concernerRepository");
+					    				
+					    				List<Integer> intListSommets = new ArrayList<Integer>();// Converti les choix en list de integer
+					    				for(String s1:sommets) intListSommets.add(Integer.valueOf(s1));
+					    				
+					    				HashMap<Integer, String> sommetWithDate = new HashMap<Integer, String>();
+					    				
+					    				  for (int i=0; i<intListSommets.size(); i++) {
+					    				      sommetWithDate.put(intListSommets.get(i), dateSommets.get(i));//J'associe chaque sommet à sa date
+					    				    }
+					    				  
+					    			   
+					    			   for (Integer i : sommetWithDate.keySet()) {
+					    				   ConcernerModel concernerSommet = new ConcernerModel();
+					    				   
+						    				   ConcernerKey concernerKey = new ConcernerKey();
+						    				   
+						    				   concernerKey.setCoderandonnees(r.getId());
+						    				   concernerKey.setCodesommets(i);
+					    				   
+					    				   concernerSommet.setId(concernerKey);
+					    				   concernerSommet.setDate_concerner(sommetWithDate.get(i));
+					    				   concernerSommet.setRandonnees(r);
+					    				   concernerSommet.setSommets(sommetsRepository.findById(i).get());
+					    				   
+					    				   concernerRepository.save(concernerSommet);
+					    			   }
+					    			   
+					    			   if(!lA.contentEquals("null") && !dA.contentEquals("null")) {
+					    				   
+					    				   Iterable<AbrisModel> abrisModel;
+						    				AbrisRepository abrisRepository = (AbrisRepository) context.getBean("abrisRepository");
+						    				
+						    				Iterable<ReserverModel> reserverModel;
+						    				ReserverRepository reserverRepository = (ReserverRepository) context.getBean("reserverRepository");
+						    				
+						    				List<Integer> intListAbris = new ArrayList<Integer>();// Converti les choix en list de integer
+						    				for(String a1:sommets) intListAbris.add(Integer.valueOf(a1));
+						    				
+						    				HashMap<Integer, String> abrisWithDate = new HashMap<Integer, String>();
+						    				
+						    				  for (int i=0; i<intListAbris.size(); i++) {
+						    				      abrisWithDate.put(intListAbris.get(i), dateAbris.get(i));//J'associe chaque abris à sa date
+						    				    }
+						    				  
+						    			   
+						    			   for (Integer i : abrisWithDate.keySet()) {
+						    				   ReserverModel reserverAbris = new ReserverModel();
+						    				   
+							    				   ReserverKey reserverKey = new ReserverKey();
+							    				   
+							    				   reserverKey.setCode_Randonnees(r.getId());
+							    				   reserverKey.setCode_Abris(i);;
+						    				   
+							    				reserverAbris.setId(reserverKey);
+							    				reserverAbris.setDate_Reserver(abrisWithDate.get(i));
+							    				reserverAbris.setRandonnees(r);
+							    				reserverAbris.setAbris(abrisRepository.findById(i).get());
+							    				reserverAbris.setStatut_Reserver("en attente");
+						    				   
+							    				reserverRepository.save(reserverAbris);
+						    			   }
+					    				   
+					    			   }
+					    			   
+					    			   
 					    			  
 					    			   
 					    		   return "Randonnées enregistré";}

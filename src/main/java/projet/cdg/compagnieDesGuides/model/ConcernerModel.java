@@ -23,17 +23,17 @@ public class ConcernerModel {
 	ConcernerKey id;
 	
 	@ManyToOne
-	@MapsId("code_sommets")
+	@MapsId("codesommets")
 	@JoinColumn(name="code_Sommets")
 	SommetsModel sommets;
 	
 	@ManyToOne
-	@MapsId("code_randonnees")
+	@MapsId("coderandonnees")
 	@JoinColumn(name="code_Randonnees")
 	RandonneesModel randonnees;
 	
 	@Column(name="date_Concerner")
-	Date date_concerner;
+	String date_concerner;
 
 	public RandonneesModel getRandonnees() {
 		return randonnees;
@@ -51,11 +51,11 @@ public class ConcernerModel {
 		this.sommets = sommets;
 	}
 
-	public Date getDate_concerner() {
+	public String getDate_concerner() {
 		return date_concerner;
 	}
 
-	public void setDate_concerner(Date date_concerner) {
+	public void setDate_concerner(String date_concerner) {
 		this.date_concerner = date_concerner;
 	}
 

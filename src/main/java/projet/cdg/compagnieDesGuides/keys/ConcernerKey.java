@@ -9,32 +9,33 @@ import javax.persistence.Embeddable;
 public class ConcernerKey implements Serializable {
 
 	@Column(name = "code_Sommets")
-    int code_sommets;
+    int codesommets;
 
 	@Column(name = "code_Randonnees")
-    int code_randonnees;
+    int coderandonnees;
 
-	public int getCode_sommet() {
-		return code_sommets;
+	public int getCodesommets() {
+		return codesommets;
 	}
 
-	public void setCode_sommet(int code_sommet) {
-		this.code_sommets = code_sommet;
+	public void setCodesommets(int codesommets) {
+		this.codesommets = codesommets;
 	}
 
-	public int getCode_Randonnees() {
-		return code_randonnees;
+	public int getCoderandonnees() {
+		return coderandonnees;
 	}
 
-	public void setCode_Randonnees(int code_Randonnees) {
-		this.code_randonnees = code_Randonnees;
+	public void setCoderandonnees(int coderandonnees) {
+		this.coderandonnees = coderandonnees;
 	}
-    @Override
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + code_randonnees;
-		result = prime * result + code_sommets;
+		result = prime * result + coderandonnees;
+		result = prime * result + codesommets;
 		return result;
 	}
 
@@ -47,11 +48,12 @@ public class ConcernerKey implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ConcernerKey other = (ConcernerKey) obj;
-		if (code_randonnees != other.code_randonnees)
+		if (coderandonnees != other.coderandonnees)
 			return false;
-		if (code_sommets != other.code_sommets)
+		if (codesommets != other.codesommets)
 			return false;
 		return true;
 	}
+
 	
 }

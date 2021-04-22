@@ -33,7 +33,7 @@
 			out.print("<td>"+r.getNombres_personnes()+"</td>");
 			out.print("<td>"+r.getDate_debut()+"</td>");
 			out.print("<td>"+r.getDate_fin()+"</td>");
-			out.print("<td>"+r.get_guide()+"</td>");
+			out.print("<td>"+r.getGuide().getNom()+"</td>");
 			Set<ReserverModel> reserver = r.getReserver();
 			out.print("<td>");
 			for (ReserverModel re:reserver) {
