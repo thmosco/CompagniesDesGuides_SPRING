@@ -43,6 +43,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class RandonneesController {
 	
@@ -168,10 +172,15 @@ public class RandonneesController {
 		//return mav;	
 	}
 	@GetMapping("/randonnees")
-	public ModelAndView mesRandonnees() {
+	public ModelAndView mesRandonnees(
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("randonnees",randonneesRepository.findAll());
+		 HttpSession session = request.getSession(); 
+		   
+		 GuidesModel guide = (GuidesModel) session.getAttribute("guide");
+		
+		mav.addObject("randonnees",randonneesRepository.randoByGuides(guide.getId()));
 		mav.addObject("abris",abrisRepository.findAll());
 		mav.addObject("sommets",sommetRepository.findAll());
 		
@@ -186,7 +195,8 @@ public class RandonneesController {
 											@RequestParam(value="sommets", defaultValue="null") List<String> sommets,
 											@RequestParam(value="dateSommet", defaultValue="null") List<String> dateSommets,
 											@RequestParam(value="abris", defaultValue="null") List<String> abris,
-											@RequestParam(value="dateAbris", defaultValue="null") List<String> dateAbris) {
+											@RequestParam(value="dateAbris", defaultValue="null") List<String> dateAbris,
+											HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 				
 				String lS = sommets.get(0);
@@ -256,7 +266,11 @@ public class RandonneesController {
 					    			   
 					    			   RandonneesModel r = new RandonneesModel();
 					    			   
-					    			   r.setGuide(guidesRepository.findById(1).get());
+					    			   HttpSession session = request.getSession(); 
+					    			   
+					    			   GuidesModel guide = (GuidesModel) session.getAttribute("guide");
+					    			   
+					    			   r.setGuide(guide);
 					    			   r.setDate_debut(debut);
 					    			   r.setDate_fin(fin);
 					    			   r.setNombres_personnes(Integer.parseInt(personnes));

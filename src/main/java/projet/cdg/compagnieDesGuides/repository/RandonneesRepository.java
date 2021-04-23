@@ -1,6 +1,7 @@
 package projet.cdg.compagnieDesGuides.repository;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.Transaction;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,5 +23,8 @@ public interface RandonneesRepository extends CrudRepository<RandonneesModel, In
 	@Modifying
     @Transactional
 	void deleteFromId(@Param(value = "id") int id);
+	
+	@Query(value="Select * FROM randonnees where code_Guides = ?1", nativeQuery=true)
+	Set<RandonneesModel> randoByGuides(int id);
 
 }
