@@ -77,7 +77,7 @@
 				out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
 				out.print("Date Reservation : <input type='date' class='form-control' placeholder='Date' name='dateReservation' value='" + re.getDate_Reserver()+ "'>");
 				out.print("<input type='submit' value='modifier' class='btn btn-info mt-3'>");
-				out.print("</div></div></form><div class='card-body'> ");
+				out.print("</div></div></form> ");
 				out.print("<br>");
 			}
 			out.print("</td>");
@@ -113,5 +113,6 @@
 			out.print("<tr>");
 		}
 	%>
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
