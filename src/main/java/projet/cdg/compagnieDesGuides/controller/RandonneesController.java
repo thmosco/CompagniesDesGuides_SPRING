@@ -51,6 +51,8 @@ public class RandonneesController {
 	@Autowired
 	private AbrisRepository abrisRepository;
 	@Autowired
+	private ReserverRepository reserverRepository;
+	@Autowired
 	private ApplicationContext context;
 	
 	public static boolean isValid(String strdate, String format) {
@@ -84,7 +86,7 @@ public class RandonneesController {
 							erreur += "Plus de 15 jours de randonnées <br>";
 						} else {
 							randonneesRepository.update(id, nbPersonne, dateDebut, dateFin);
-
+							reserverRepository.updateReserver(dateDebut, dateFin);
 						}
 					}
 				}
