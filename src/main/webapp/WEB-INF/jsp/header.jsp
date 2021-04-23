@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="java.util.Set" %>
+    <%@ page import="projet.cdg.compagnieDesGuides.model.GuidesModel" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,6 +74,16 @@ input:checked + .slider:before {
 } 
 
 </style>
+<%
+
+GuidesModel guide = (GuidesModel)session.getAttribute("guide");
+
+if (guide == null){
+		%><<jsp:forward page="index.jsp" /><%
+	}
+
+
+%>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/CompagnieDesGuides">CompagnieDesGuides</a>
@@ -94,6 +106,9 @@ input:checked + .slider:before {
           <a class="dropdown-item" href="/CompagnieDesGuides/randonnees/vallees">à partir d'une vallée</a>
           <a class="dropdown-item" href="/CompagnieDesGuides/randonnees/custom">à partir d'une randonnée vierge</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/compagnieDesGuides/logout">Se déconnecter</a>
       </li>
     </ul>
   </div>
