@@ -21,7 +21,7 @@
 
 %>
 
-
+<p>${erreur}<p>
 <form action="/compagnieDesGuides/randonnees/creation" method="post">
 
 	<p>

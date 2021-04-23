@@ -7,7 +7,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import projet.cdg.compagnieDesGuides.model.AbrisModel;
+import projet.cdg.compagnieDesGuides.model.AscensionsModel;
 
 @Repository
 public interface AbrisRepository extends CrudRepository<AbrisModel, Integer>{
+	
+	@Query(value="Select * from abris where code_Vallees = ?1", nativeQuery=true)
+	Iterable<AbrisModel> findAbrisByVallees(int id);
 }

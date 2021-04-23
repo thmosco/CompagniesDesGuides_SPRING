@@ -19,7 +19,7 @@
 
 		Iterable<SommetsModel> sommets = (Iterable<SommetsModel>)request.getAttribute("sommets");
 	
-		Iterable<AscensionsModel> ascensions = (Iterable<AscensionsModel>)request.getAttribute("ascensions");
+		Iterable<AbrisModel> abris = (Iterable<AbrisModel>)request.getAttribute("abris");
 	%>
 	<div>
 	<%
@@ -37,19 +37,24 @@
 			}
 			out.print("<p>Abris dans cette vallée</p>");
 					
-					for (AscensionsModel a:ascensions) {
+					for (AbrisModel a:abris) {
 						  
 						out.print("<div style = 'border: 1px solid black' >");
 
-						  out.print("<p>"+a.getAbris().getNom_abris()+"</p>");
-						  out.print("<p>"+a.getAbris().getType_abris()+"</p>");
-						  out.print("<p>"+a.getAbris().getPrix_nuit()+"</p>");//Les abris apparaissent en double, ne faire apparaitre que les abris de cette vallées
+						  out.print("<p>"+a.getNom_abris()+"</p>");
+						  out.print("<p>"+a.getType_abris()+"</p>");
+						  out.print("<p>"+a.getPrix_nuit()+"</p>");
 						  
-						  out.print("<p>Cette abris vous est conseillez si vous faites le sommet "+a.getSommets().getNom() +"</p>");
-						  
+						  if(!a.getAscensions().isEmpty()){//Si j'ai des ascensions lié à cette abris, je conseil cette abri pour des sommets
+							  Set<AscensionsModel> ascensions = a.getAscensions();
+							  String lesSommets = "Cette abris vous est conseillez si vous faites le(s) sommet(s) ";
+							  for(AscensionsModel as:ascensions){lesSommets = lesSommets + as.getSommets().getNom();}
+							  
+							  out.print("<p>"+lesSommets+"</p>");
+						  }
 						  %>
 						  
-						  <input type='checkbox' name="abris" value='<% out.print(a.getAbris().getId());%>'>/
+						  <input type='checkbox' name="abris" value='<% out.print(a.getId());%>'>
 						  
 						  </div>
 						  <% 

@@ -114,14 +114,14 @@ public class RandonneesController {
 	}
 	
 	@PostMapping("/randonnees/creation")
-	public String creationRandonnees(@RequestParam(value="personnes", defaultValue="null") String personnes,
+	public ModelAndView creationRandonnees(@RequestParam(value="personnes", defaultValue="null") String personnes,
 											@RequestParam(value="debut", defaultValue="null") String debut,
 											@RequestParam(value="fin", defaultValue="null") String fin,
 											@RequestParam(value="sommets", defaultValue="null") List<String> sommets,
 											@RequestParam(value="dateSommet", defaultValue="null") List<String> dateSommets,
 											@RequestParam(value="abris", defaultValue="null") List<String> abris,
 											@RequestParam(value="dateAbris", defaultValue="null") List<String> dateAbris) {
-		//ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 				
 				String lS = sommets.get(0);
 				String dS = dateSommets.get(0);
@@ -156,7 +156,9 @@ public class RandonneesController {
 											e.printStackTrace();
 										}
 					    				   if(dateVerifSommet.after(finDate) || dateVerifSommet.before(debutDate)) {
-					    					   return "La date d'un sommet n'est pas dans la date de la randonnée";
+					    					   mav.addObject("erreur", "La date d'un sommet n'est pas dans la date de la randonnée");
+					    					   mav.setViewName("erreur");
+									    	   return mav;
 					    				   }
 					    			   }
 					    			   
@@ -171,12 +173,17 @@ public class RandonneesController {
 													e.printStackTrace();
 												}
 							    				   if(dateVerifAbris.after(finDate) || dateVerifAbris.before(debutDate)) {
-							    					   return "La date d'un abris n'est pas dans la date de la randonnée";
+							    					   mav.addObject("erreur", "La date d'un abris n'est pas dans la date de la randonnée");
+							    					   mav.setViewName("erreur");
+											    	   return mav;
+							    					   
 							    				   }
 							    			   }
 					    					   
 					    				   }else {
-					    				   	return "Il manque une date à un abris";}
+					    					   mav.addObject("erreur", "Il manque une date à un abris");
+					    					   mav.setViewName("erreur");
+									    	   return mav;}
 					    			   }
 					    			   Iterable<GuidesModel> guidesModel;
 					    				GuidesRepository guidesRepository = (GuidesRepository) context.getBean("guidesRepository");
@@ -231,7 +238,7 @@ public class RandonneesController {
 						    				ReserverRepository reserverRepository = (ReserverRepository) context.getBean("reserverRepository");
 						    				
 						    				List<Integer> intListAbris = new ArrayList<Integer>();// Converti les choix en list de integer
-						    				for(String a1:sommets) intListAbris.add(Integer.valueOf(a1));
+						    				for(String a1:abris) intListAbris.add(Integer.valueOf(a1));
 						    				
 						    				HashMap<Integer, String> abrisWithDate = new HashMap<Integer, String>();
 						    				
@@ -260,15 +267,24 @@ public class RandonneesController {
 					    			   }
 					    			   
 					    			   
-					    			  
-					    			   
-					    		   return "Randonnées enregistré";}
+					    		
+					    		return new ModelAndView("redirect:/randonnees");}
 					    	   }
-					    	   return"La randonnée ne doit pas excéder 15 jours";
+					    	   mav.addObject("erreur", "La randonnée ne doit pas excéder 15 jours");
+					    	   mav.setViewName("erreur");
+					    	   return mav;
 							}
-					    return "Les dates de la randonnée ne sont pas correct";
+					    mav.addObject("erreur", "Les dates de la randonnée ne sont pas correct");
+					    mav.setViewName("erreur");
+						return mav;
 						}
-			return "Il vous faut saisir tout les champs dans votre randonnée !";
+			mav.addObject("erreur", "Il vous faut saisir tout les champs dans votre randonnée !");
+			mav.setViewName("erreur");
+			return mav;
 		}
+	
 	}
+
+
+
 
