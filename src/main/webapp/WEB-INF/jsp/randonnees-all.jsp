@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Demo Spring MVC</title>
 </head>
 <body>
@@ -53,7 +53,7 @@
 				tab.add("Enlever réservation");
 				tab.add("en attente");
 				tab.add("confirmé");
-				out.print("<form>Statut Reservation<select name='statutReservation'>");
+				out.print("<form action='/CompagnieDesGuides/reserver-update-form/"+abris.getId()+"/"+r.getId()+"' method='post' accept-charset='UTF-8'>Statut Reservation<select name='statutReservation'>");
 				while (i < 3){
 					String reservation = "";
 					if(tab.get(i).equals(re.getStatut_Reserver())){reservation = "selected";}
@@ -61,6 +61,8 @@
 					i++;
 				}
 				out.print("</select>");
+				out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
+				out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
 				out.print("Date Reservation : <input type='date' name='dateReservation' value='" + re.getDate_Reserver()+ "'>");
 				out.print("<input type='submit' value='modifier'>");
 				out.print("</form>");
@@ -73,14 +75,17 @@
 				SommetsModel sommet = co.getSommets();
 				out.print("Nom : " + sommet.getNom() + " --- ");
 				out.print("Altitude : " + sommet.getAltitude() + " --- ");
-				out.print("<form>");
+				out.print("<form action='/CompagnieDesGuides/concerner-update-form/"+sommet.getId()+"/"+r.getId()+"' method='post'>");
+				out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
+				out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
 				out.print("Date exploration <input type='date' name='dateConcerner' value='" + co.getDate_concerner() + "'>");
 				out.print("<input type='submit' value='modifier'>");
 				out.print("</form>");
+				out.print("<a href='/CompagnieDesGuides/concerner-delete/"+sommet.getId()+"/"+r.getId()+"'>Effacer</a>");
 				out.print("<br>");
 			}
 			out.print("</td>");
-			out.print("<td><a href='randonnees-delete/"+r.getId()+"'>Effacer</a></td>");
+			out.print("<td><a href='/CompagnieDesGuides/randonnees-delete/"+r.getId()+"'>Effacer</a></td>");
 			out.print("<tr>");
 		}
 	%>

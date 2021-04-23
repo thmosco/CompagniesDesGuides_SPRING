@@ -97,7 +97,6 @@ public class RandonneesController {
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("date",dateFin);
 		mav.addObject("erreur",erreur);
 		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.addObject("id",id);
