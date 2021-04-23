@@ -85,13 +85,7 @@ public class ReserverController {
 			}
 		}
 
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.addObject("erreur",erreur);
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("id",idReservation);
-		mav.setViewName("randonnees-all");
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 	@PostMapping("/reserver-ajout-form/{idRandonnee}")
 	public ModelAndView reserverAjout(@PathVariable int idRandonnee,
@@ -137,12 +131,6 @@ public class ReserverController {
 				}
 			}
 		}
-		mav.addObject("erreur",erreur);
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.addObject("id",idRandonnee);
-		mav.setViewName("randonnees-all");
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <%@ page import="java.util.Collection" %>
 <%@ page import="projet.cdg.compagnieDesGuides.model.RandonneesModel" %>
 <%@ page import="projet.cdg.compagnieDesGuides.model.GuidesModel" %>
@@ -12,14 +11,6 @@
 
 
 <%@ page import="java.util.Set" %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Demo Spring MVC</title>
-</head>
-<body>
 	
 	<jsp:include page="header.jsp" />
 	<h1 class="my-4 text-center">Mes randonnées</h1>

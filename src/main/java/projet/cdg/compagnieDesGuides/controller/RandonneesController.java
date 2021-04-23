@@ -102,14 +102,7 @@ public class RandonneesController {
 			}
 		}
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("erreur",erreur);
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("id",id);
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.setViewName("randonnees-all");
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 	
 	@GetMapping("/randonnees-delete/{id}")
@@ -121,10 +114,7 @@ public class RandonneesController {
 		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.addObject("id",id);
 
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.setViewName("randonnees-all");	
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 	
 	@PostMapping("/randonnees/recap")

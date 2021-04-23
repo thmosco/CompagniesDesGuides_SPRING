@@ -1,4 +1,4 @@
-package projet.cdg.compagnieDesGuides.controller;
+	package projet.cdg.compagnieDesGuides.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,17 +56,11 @@ public class ConcernerController {
 	@GetMapping("/concerner-delete/{idSommet}/{idConcerner}")
 	public ModelAndView concernerModif(@PathVariable int idSommet,
 	@PathVariable int idConcerner) {
-		ModelAndView mav = new ModelAndView("redirect:/randonnees");
 		concernerRepository.deleteConcerner(idSommet, idConcerner);
 		if(concernerRepository.countSommet(idConcerner) == 0) {
 			reserverRepository.deleteAllAbrisRando(idConcerner);
 		}
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("id",idConcerner);
-		mav.setViewName("randonnees-all");
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 	
 	@PostMapping("/concerner-ajout-form/{idRandonnee}")
@@ -76,7 +70,6 @@ public class ConcernerController {
 	@RequestParam(value="dateConcerner", defaultValue="null") String dateConcerner,
 	@RequestParam(value="ajoutSommet", defaultValue="null") String ajoutSommet) throws ParseException {
 		ModelAndView mav = new ModelAndView("redirect:/randonnees");
-		System.out.println("test");
 		String erreur = "";
 		if(!isValid(dateConcerner, "yyyy-MM-dd")) {
 			erreur += "Date Concernée incorrecte <br>";
@@ -111,13 +104,7 @@ public class ConcernerController {
 				}
 			}
 		}
-		mav.addObject("erreur",erreur);
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.addObject("id",idRandonnee);
-		mav.setViewName("randonnees-all");
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 	
 	@PostMapping("/concerner-update-form/{idSommet}/{idConcerner}")
@@ -146,12 +133,6 @@ public class ConcernerController {
 				}
 			}
 		}
-		mav.addObject("erreur",erreur);
-		mav.addObject("randonnees",randonneesRepository.findAll());
-		mav.addObject("abris",abrisRepository.findAll());
-		mav.addObject("sommets",sommetRepository.findAll());
-		mav.addObject("id",idConcerner);
-		mav.setViewName("randonnees-all");
-		return mav;	
+		return new ModelAndView("redirect:/randonnees");
 	}
 }
