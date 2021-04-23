@@ -1,24 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
 <%@ page import="projet.cdg.compagnieDesGuides.model.ValleesModel" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Compagnie des guides</title>
-</head>
-<body>
-<h1>Choisir une vallée</h1>
+<jsp:include page="header.jsp" />
+
+
+<div class="container">
+
+<h1 class="text-center" style='margin-top: 10%;'>Choisir une vallée</h1>
+
 <p>Choisissez une vallée par laquel commencer votre ascension, vous pourriez par la suite sélectionner un ou plusieurs sommets de cette vallée</p>
+
+<div class="row">
+
 <%
 
 Iterable<ValleesModel> vallees = (Iterable<ValleesModel>)request.getAttribute("vallees");
 
 for (ValleesModel v:vallees){
-	out.print("<p><a href=vallee/"+ v.getId()+">Accéder à la partie "+v.getNom()+"</a></p>");
-		}
-
+		
 %>
-</body>
-</html>
+ <div class="col-sm-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Voir les sommets par la rapport à la vallée <% out.print(v.getNom()); %></h5>
+        <a href="vallee/<% out.print(v.getId()); %>" class="btn btn-primary">Choisir cette vallée</a>
+      </div>
+    </div>
+  </div>
+
+<% 
+}
+%>
+
+</div>
+</div>
+<jsp:include page="footer.jsp" />
