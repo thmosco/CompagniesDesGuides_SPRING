@@ -14,6 +14,7 @@ import projet.cdg.compagnieDesGuides.keys.ReserverKey;
 import projet.cdg.compagnieDesGuides.model.ConcernerModel;
 import projet.cdg.compagnieDesGuides.model.ReserverModel;
 import projet.cdg.compagnieDesGuides.repository.AbrisRepository;
+import projet.cdg.compagnieDesGuides.repository.ConcernerRepository;
 import projet.cdg.compagnieDesGuides.repository.RandonneesRepository;
 import projet.cdg.compagnieDesGuides.repository.ReserverRepository;
 import projet.cdg.compagnieDesGuides.repository.SommetsRepository;
@@ -29,7 +30,9 @@ public class ReserverController {
 	private RandonneesRepository randonneesRepository;
 	@Autowired
 	private ReserverRepository reserverRepository;
-
+	@Autowired
+	private ConcernerRepository concernerRepository;
+	
 	@Autowired
 	private AbrisRepository abrisRepository;
 	@Autowired
@@ -116,6 +119,8 @@ public class ReserverController {
 						//verif si ça existe pas déjà
 						} else if(reserverRepository.countReserver(Integer.valueOf(ajoutAbris), idRandonnee) != 0){
 							erreur += "Duo Sommet Randonnée existant<br>";
+						} else if(concernerRepository.countSommet(idRandonnee)== 0){
+							erreur += "Aucun sommet, donc aucun abris<br>";
 						} else {
 							ReserverModel reserverModel = new ReserverModel();
 							ReserverKey reserverKey = new ReserverKey();

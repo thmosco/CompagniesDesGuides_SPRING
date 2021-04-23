@@ -22,96 +22,94 @@
 <body>
 	
 	<jsp:include page="header.jsp" />
-	<h1>Mes randonnées</h1>
+	<h1 class="my-4 text-center">Mes randonnées</h1>
 	<%
 	
 		//récupérer les données transmises dans la requête (objet ModelAndView)
 		Iterable<RandonneesModel> randonnees = (Iterable<RandonneesModel>)request.getAttribute("randonnees");
-		if(request.getAttribute("erreur") != null) {out.print(request.getAttribute("erreur"));};
-		//Afficher les employés
-		out.print("<table class='table'><thead><tr><th>ID</th><th>Date de début</th><th>Date de fin</th><th>Nombres de personnes</th><th></th><th>Nom du guide</th><th>Abris</th><th>Sommets</th></tr></thead></tbody>");
+		if(request.getAttribute("erreur") != null) {out.print("<div class='h5 font-weight-bold text-warning'>"+request.getAttribute("erreur")+"</div>");};
+		out.print("<table class='table'><thead><tr><th class='border h3'>Randonnées</th><th class='border h3'>Abris</th><th class='border h3'>Sommets</th></tr></thead></tbody>");
 		for (RandonneesModel r:randonnees){
 			out.print("<tr>");
-			out.print("<td>"+r.getId()+"</td>");
-			out.print("<form action='/CompagnieDesGuides/randonnees-update-form/"+r.getId()+"' method='post'>");
-			out.print("<td><input type='date' name='dateDebut' value='" + r.getDate_debut() + "'></td>");
-			out.print("<td><input type='date' name='dateFin' value='" + r.getDate_fin() + "'></td>");
-			out.print("<td><input type='number' name='nbPersonne' value='" + r.getNombres_personnes() + "'></td>");
-			out.print("<td><input type='submit' value='Modifier'></td>");
-			out.print("</form>");
-			out.print("<td>"+r.getGuide().getNom()+"</td>");
+			out.print("<td class='border'><div class='card bg-secondary text-white mx-auto'><div class='card-header'>Randonnée "+r.getId()+"</div><div class='card-body'><form action='/CompagnieDesGuides/randonnees-update-form/"+r.getId()+"' method='post'>");
+			out.print("<div class='card-body'>Date Debut<input type='date' class='form-control' placeholder='Date' name='dateDebut' value='" + r.getDate_debut() + "'><br>");
+			out.print("Date Fin<input type='date' name='dateFin' class='form-control' placeholder='Date' value='" + r.getDate_fin() + "'><br>");
+			out.print("Nb personnes <input type='number' class='form-control' placeholder='Number' name='nbPersonne' value='" + r.getNombres_personnes() + "'>");
+			out.print("<input type='submit' value='Modifier' class='btn btn-info mt-3'>");
+			out.print("</form></div></div></td>");
 			Set<ReserverModel> reserver = r.getReserver();
-			out.print("<td>");
-			out.print("<form action='/CompagnieDesGuides/reserver-ajout-form/"+r.getId()+"' method='post'><select name='ajoutAbris'>");
+			out.print("<td class='border'>");
+			out.print("<div class='card bg-light text-dark mx-auto'><form action='/CompagnieDesGuides/reserver-ajout-form/"+r.getId()+"' method='post'><div class='card-header'>Ajout d'abris</div><div class='card-body'> <select name='ajoutAbris'  class='form-control'>");
 			Iterable<AbrisModel> tousAbris = (Iterable<AbrisModel>)request.getAttribute("abris");
 			for (AbrisModel a:tousAbris){
 				out.print("<option value='"+a.getId()+"'>"+a.getNom_abris()+"</option>");
 			}
 
-			out.print("</select>");
+			out.print("</select><br>");
 			out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
 			out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
-			out.print("Date Reservation : <input type='date' name='dateReservation' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
-			out.print("<input type='submit' value='Ajouter'>");
+			out.print("Date Reservation : <input type='date' class='form-control' placeholder='Date' name='dateReservation' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
+			out.print("<input type='submit' value='Ajouter' class='btn btn-info mt-3'>");
 			
-			out.print("</form><br>");
+			out.print("</div></div>	</form><br>");
 			for (ReserverModel re:reserver) {
 				AbrisModel abris = re.getAbris();
-				out.print("Nom : " + abris.getNom_abris() + " --- ");
-				out.print("TypeAbris : " + abris.getType_abris() + " --- ");
-				out.print("Altitude : " + abris.getAltitude() + " --- ");
-				out.print("Prix Nuit : " + abris.getPrix_nuit() + " --- ");
-				out.print("Prix Repas : " + abris.getPrix_repas() + " --- ");
-				out.print("Tel Gardien : " + abris.getTel_gardien() + " --- ");
+				out.print("<div class='card bg-dark text-white mx-auto'><div class='card-header'>" + abris.getNom_abris() + " --- "+abris.getType_abris() +" </div><div class='card-body'> ");
+				out.print("<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-dark'>TypeAbris : " + abris.getType_abris() + " --- </li>");
+				out.print("<li class='list-group-item list-group-item-dark'>Altitude : " + abris.getAltitude() + " --- </li>");
+				out.print("<li class='list-group-item list-group-item-dark'>Prix Nuit : " + abris.getPrix_nuit() + " --- </li>");
+				out.print("<li class='list-group-item list-group-item-dark'>Prix Repas : " + abris.getPrix_repas() + " --- </li>");
+				out.print("<li class='list-group-item list-group-item-dark'>Tel Gardien : " + abris.getTel_gardien() + " --- </li></ul>");
 				int i = 0;
 				ArrayList<String> tab = new ArrayList<String>();
 				tab.add("Enlever réservation");
 				tab.add("en attente");
 				tab.add("confirmé");
-				out.print("<form action='/CompagnieDesGuides/reserver-update-form/"+abris.getId()+"/"+r.getId()+"' method='post' accept-charset='UTF-8'>Statut Reservation<select name='statutReservation'>");
+				out.print("<form action='/CompagnieDesGuides/reserver-update-form/"+abris.getId()+"/"+r.getId()+"' method='post' accept-charset='UTF-8'>Statut Reservation<select name='statutReservation' class='form-control'>");
 				while (i < 3){
 					String reservation = "";
 					if(tab.get(i).equals(re.getStatut_Reserver())){reservation = "selected";}
 					out.print("<option valeur='"+tab.get(i)+"' "+reservation+">"+tab.get(i)+"</option>");
 					i++;
 				}
-				out.print("</select>");
+				out.print("</select class='form-control'><br>");
 				out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
 				out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
-				out.print("Date Reservation : <input type='date' name='dateReservation' value='" + re.getDate_Reserver()+ "'>");
-				out.print("<input type='submit' value='modifier'>");
-				out.print("</form>");
+				out.print("Date Reservation : <input type='date' class='form-control' placeholder='Date' name='dateReservation' value='" + re.getDate_Reserver()+ "'>");
+				out.print("<input type='submit' value='modifier' class='btn btn-info mt-3'>");
+				out.print("</div></div></form><div class='card-body'> ");
 				out.print("<br>");
 			}
 			out.print("</td>");
 			Set<ConcernerModel> concerner = r.getConcerner();
 			out.print("<td>");
-			out.print("<form action='/CompagnieDesGuides/concerner-ajout-form/"+r.getId()+"' method='post'><select name='ajoutSommet'>");
+			out.print("<div class='card bg-light text-dark mx-auto'><form action='/CompagnieDesGuides/concerner-ajout-form/"+r.getId()+"' method='post'><div class='card-header'>Ajout Sommet</div><div class='card-body'><select name='ajoutSommet' class='form-control'>");
 			Iterable<SommetsModel> tousSommets = (Iterable<SommetsModel>)request.getAttribute("sommets");
 			for (SommetsModel s:tousSommets){
 				out.print("<option value='"+s.getId()+"'>"+s.getNom()+ " " + s.getAltitude()+"</option>");
 			}
-			out.print("</select>");
+			out.print("</select><br>");
 			out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
 			out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
-			out.print("Date Exploration: <input type='date' name='dateConcerner' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
-			out.print("<input type='submit' value='Ajouter'>");
-			out.print("</form><br>");
+			out.print("Date Exploration: <input type='date' name='dateConcerner' class='form-control' placeholder='Date' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
+			out.print("<input type='submit' value='Ajouter' class='btn btn-info mt-3'>");
+			out.print("</form></div></div><br>");
 			for (ConcernerModel co:concerner) {
 				SommetsModel sommet = co.getSommets();
-				out.print("Nom : " + sommet.getNom() + " --- ");
-				out.print("Altitude : " + sommet.getAltitude() + " --- ");
+				out.print("<div class='card bg-dark text-light mb-4 mx-auto'><div class='card-header'>"+sommet.getNom()+" --- "+sommet.getAltitude()+ "</div><div class='card-body'>");
+				out.print("<ul class='list-group list-group-flush'>");
+				out.print("<li class='list-group-item list-group-item-dark'>Altitude : " + sommet.getAltitude() + " --- </li></ul>");
 				out.print("<form action='/CompagnieDesGuides/concerner-update-form/"+sommet.getId()+"/"+r.getId()+"' method='post'>");
 				out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
 				out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
-				out.print("Date exploration <input type='date' name='dateConcerner' value='" + co.getDate_concerner() + "'>");
-				out.print("<input type='submit' value='modifier'>");
+				out.print("Date exploration <input type='date' name='dateConcerner' class='form-control' placeholder='Date' value='" + co.getDate_concerner() + "'>");
+				out.print("<input type='submit' value='modifier' class='btn btn-info mt-3'>");
 				out.print("</form>");
-				out.print("<a href='/CompagnieDesGuides/concerner-delete/"+sommet.getId()+"/"+r.getId()+"'>Effacer</a>");
-				out.print("<br>");
+				out.print("<a type='button' class='btn btn-warning mt-3' href='/CompagnieDesGuides/concerner-delete/"+sommet.getId()+"/"+r.getId()+"'>Effacer</a>");
+				out.print("<br></div></div>");
 			}
 			out.print("</td>");
-			out.print("<td><a href='/CompagnieDesGuides/randonnees-delete/"+r.getId()+"'>Effacer</a></td>");
+			out.print("<td><a href='/CompagnieDesGuides/randonnees-delete/"+r.getId()+"' type='button' class='btn btn-warning mt-3'>Effacer Randonnée</a></td>");
 			out.print("<tr>");
 		}
 	%>

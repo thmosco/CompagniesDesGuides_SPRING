@@ -48,8 +48,8 @@
 	  					<p class="card-text">Le sommet <% out.print(s.getNom());%> a une altitude de <% out.print(s.getAltitude());%> m</p>
 	  					<label for="Date">Date d'arrivé au sommet <% out.print(s.getNom());%></label>
 						<input type="date" name="dateSommet" class="form-control">
-					</div>
 			</div>
+		</div>
 		<% 
 		}
 	%>
