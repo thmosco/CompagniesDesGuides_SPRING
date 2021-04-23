@@ -50,5 +50,17 @@ public class ValleesController {
 		mav.setViewName("sommets-par-vallees");
 		return mav;	
 	}
+	
+	@GetMapping("/randonnees/custom")
+	public ModelAndView choisirAbrisEtSommets() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("sommets",sommetsRepository.findAll());
+		
+		mav.addObject("abris",abrisRepository.findAll());
+		
+		mav.setViewName("randonnees-vierge");
+		return mav;	
+	}
 
 }

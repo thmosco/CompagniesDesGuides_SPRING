@@ -39,9 +39,10 @@ public class AbrisModel {
 	
 	@Column(name="telGardien_Abris")
 	Integer tel_gardien;
-	
-	@OneToMany
-	Set<ValleesModel> vallee;
+
+	@ManyToOne
+	@JoinColumn(name="code_Vallees", nullable=false)
+	ValleesModel vallee;
 
 	@OneToMany(mappedBy="abris")
 	Set<AscensionsModel> ascensions;
@@ -49,7 +50,7 @@ public class AbrisModel {
 	@OneToMany(mappedBy="abris")
 	Set<ReserverModel> reserver;
 	
-	public Set<ValleesModel> getVallee() {
+	public ValleesModel getVallee() {
 		return vallee;
 	}
 
@@ -61,7 +62,7 @@ public class AbrisModel {
 		this.reserver = reserver;
 	}
 
-	public void setVallee(Set<ValleesModel> vallee) {
+	public void setVallee(ValleesModel vallee) {
 		this.vallee = vallee;
 	}
 
@@ -129,13 +130,6 @@ public class AbrisModel {
 		this.tel_gardien = tel_gardien;
 	}
 
-	public Set<ValleesModel> getVallees() {
-		return vallee;
-	}
-
-	public void setCode_vallee(Set<ValleesModel> code_vallee) {
-		this.vallee = code_vallee;
-	}
 
 	@Override
 	public String toString() {

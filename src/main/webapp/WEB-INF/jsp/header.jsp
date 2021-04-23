@@ -84,15 +84,15 @@ input:checked + .slider:before {
         <a class="nav-link" href="/compagnieDesGuides">Accueil<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="randonnees">Mes randonnées</a>
+        <a class="nav-link" href="/compagnieDesGuides/randonnees">Mes randonnées</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Créer un nouvelle randonnées
+          Créer une nouvelle randonnée
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="randonnees/vallees">à partir d'une vallée</a>
-          <a class="dropdown-item" href="#">à partir d'une randonnée vierge</a>
+          <a class="dropdown-item" href="/compagnieDesGuides/randonnees/vallees">à partir d'une vallée</a>
+          <a class="dropdown-item" href="/compagnieDesGuides/randonnees/custom">à partir d'une randonnée vierge</a>
         </div>
       </li>
     </ul>
