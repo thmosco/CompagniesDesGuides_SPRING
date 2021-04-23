@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface RandonneesRepository extends CrudRepository<RandonneesModel, Integer>{
-	@Query(value="UPDATE randonnees set nbPersonnes_Randonnees = ?2 , dateDebut_Randonnees = ?3 , dateFin_Randonnees = ?3 where code_Randonnees = ?1", nativeQuery=true)
+	@Query(value="UPDATE randonnees set nbPersonnes_Randonnees = ?2 , dateDebut_Randonnees = ?3 , dateFin_Randonnees = ?4 where code_Randonnees = ?1", nativeQuery=true)
 	@Modifying
     @Transactional
-	void update(@Param(value = "id") int id, @Param(value = "nbPers") String nbPers, @Param(value = "dateDebut") String dateDebut, @Param(value = "dateFin") String dateFin);
+	void update(@Param(value = "id") int id, @Param(value = "nbPersonne") String nbPers, @Param(value = "dateDebut") String dateDebut, @Param(value = "dateFin") String dateFin);
 }
