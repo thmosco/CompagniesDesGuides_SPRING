@@ -18,6 +18,7 @@ import projet.cdg.compagnieDesGuides.repository.AbrisRepository;
 import projet.cdg.compagnieDesGuides.repository.ConcernerRepository;
 import projet.cdg.compagnieDesGuides.repository.GuidesRepository;
 import projet.cdg.compagnieDesGuides.repository.RandonneesRepository;
+import projet.cdg.compagnieDesGuides.repository.ReserverRepository;
 import projet.cdg.compagnieDesGuides.repository.SommetsRepository;
 
 import java.text.ParseException;
@@ -36,6 +37,8 @@ public class ConcernerController {
 	private RandonneesRepository randonneesRepository;
 	@Autowired
 	private ConcernerRepository concernerRepository;
+	@Autowired
+	private ReserverRepository reserverRepository;
 
 	@Autowired
 	private ApplicationContext context;
@@ -55,6 +58,9 @@ public class ConcernerController {
 	@PathVariable int idConcerner) {
 		ModelAndView mav = new ModelAndView("redirect:/randonnees");
 		concernerRepository.deleteConcerner(idSommet, idConcerner);
+		if(concernerRepository.countSommet(idConcerner) == 0) {
+			reserverRepository.deleteAllAbrisRando(idConcerner);
+		}
 		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.addObject("id",idConcerner);
 		mav.setViewName("randonnees-all");
