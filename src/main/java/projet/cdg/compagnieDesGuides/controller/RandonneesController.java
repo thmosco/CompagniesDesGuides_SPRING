@@ -53,6 +53,8 @@ public class RandonneesController {
 	@Autowired
 	private ReserverRepository reserverRepository;
 	@Autowired
+	private ConcernerRepository concernerRepository;
+	@Autowired
 	private ApplicationContext context;
 	
 	public static boolean isValid(String strdate, String format) {
@@ -87,6 +89,7 @@ public class RandonneesController {
 						} else {
 							randonneesRepository.update(id, nbPersonne, dateDebut, dateFin);
 							reserverRepository.updateReserver(dateDebut, dateFin);
+							concernerRepository.updateConcerner(dateDebut, dateFin);
 						}
 					}
 				}
