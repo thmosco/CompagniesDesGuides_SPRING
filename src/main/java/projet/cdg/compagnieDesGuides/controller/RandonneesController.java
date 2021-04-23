@@ -31,6 +31,7 @@ import projet.cdg.compagnieDesGuides.repository.SommetsRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,9 +78,14 @@ public class RandonneesController {
 					erreur += "nbPersonne incorrect <br>";
 				} else {
 					if(dateDebut.compareTo(dateFin)>=0) {
-						erreur += "Date de début plus grande que date de fin";
+						erreur += "Date de début plus grande que date de fin <br>";
 					} else {
-						randonneesRepository.update(id, nbPersonne, dateDebut, dateFin);
+						if(ChronoUnit.DAYS.between(LocalDate.parse(dateDebut),LocalDate.parse(dateFin)) > 15) {
+							erreur += "Plus de 15 jours de randonnées <br>";
+						} else {
+							randonneesRepository.update(id, nbPersonne, dateDebut, dateFin);
+
+						}
 					}
 				}
 			}
