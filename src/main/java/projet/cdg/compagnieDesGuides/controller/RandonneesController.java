@@ -1,6 +1,7 @@
 package projet.cdg.compagnieDesGuides.controller;
 
 
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -39,27 +40,60 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 @RestController
 public class RandonneesController {
 	
 	@Autowired
 	private RandonneesRepository randonneesRepository;
-	
+	@Autowired
+	private AbrisRepository abrisRepository;
 	@Autowired
 	private ApplicationContext context;
 	
-	@GetMapping("/randonnees-update-form/{id}")
-	public ModelAndView randonneesModif(@PathVariable int id) {
-		RandonneesModel r = randonneesRepository.findById(id).get();
-		ModelAndView mav = new ModelAndView();
+	public static boolean isValid(String strdate, String format) {
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        try {
+            Date date = df.parse(strdate);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+	@PostMapping("/randonnees-update-form/{id}")
+	public ModelAndView randonneesModif(@PathVariable int id,
+	@RequestParam(value="dateDebut", defaultValue="null") String dateDebut,
+	@RequestParam(value="dateFin", defaultValue="null") String dateFin,
+	@RequestParam(value="nbPersonne", defaultValue="null") String nbPersonne) throws ParseException {
+		String erreur = "";
+		if(!isValid(dateDebut, "yyyy-MM-dd")) {
+			erreur += "Date de début incorrect <br>";
+		} else {
+			if(!isValid(dateFin, "yyyy-MM-dd")) {
+				erreur += "Date de fin incorrect <br>";
+			} else {
+				if(!nbPersonne.matches("[+-]?\\d*(\\.\\d+)?")) {
+					erreur += "nbPersonne incorrect <br>";
+				} else {
+					if(dateDebut.compareTo(dateFin)>=0) {
+						erreur += "Date de début plus grande que date de fin";
+					} else {
+						randonneesRepository.update(id, nbPersonne, dateDebut, dateFin);
+					}
+				}
+			}
+		}
 		
-		mav.addObject("randonnees",r);
-		mav.addObject("randonnees1",randonneesRepository.findById(id));
-		mav.setViewName("randonnees-update-form");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("date",dateFin);
+		mav.addObject("erreur",erreur);
+		mav.addObject("randonnees",randonneesRepository.findAll());
+		mav.addObject("id",id);
+		mav.setViewName("randonnees-all");
 		return mav;	
 	}
-	
+
 	@PostMapping("/randonnees/recap")
 	public ModelAndView creationRecapRandonnees(@RequestParam(value="sommets", defaultValue="null") List<String> sommets,
 										@RequestParam(value="abris", defaultValue="null") List<String> abris) {

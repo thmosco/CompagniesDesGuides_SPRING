@@ -1,13 +1,20 @@
 package projet.cdg.compagnieDesGuides.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Date;
+
+import org.hibernate.Transaction;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import projet.cdg.compagnieDesGuides.model.RandonneesModel;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface RandonneesRepository extends CrudRepository<RandonneesModel, Integer>{
+	@Query(value="UPDATE randonnees set nbPersonnes_Randonnees = ?2 , dateDebut_Randonnees = ?3 , dateFin_Randonnees = ?3 where code_Randonnees = ?1", nativeQuery=true)
+	@Modifying
+    @Transactional
+	void update(@Param(value = "id") int id, @Param(value = "nbPers") String nbPers, @Param(value = "dateDebut") String dateDebut, @Param(value = "dateFin") String dateFin);
 }
