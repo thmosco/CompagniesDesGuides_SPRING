@@ -20,7 +20,9 @@ public interface ReserverRepository extends CrudRepository<ReserverModel, Intege
     @Transactional
 	void deleteReserver(@Param(value = "code_Abris") int code_Abris, @Param(value = "code_Randonnees") int code_Randonnees);
 	
-	
+	@Query(value="SELECT count(*) FROM reserver where code_Randonnees = ?2 AND code_Abris= ?1", nativeQuery=true)
+	int countReserver(@Param(value = "code_Abris") int code_Sommet, @Param(value = "code_Randonnees") int code_Randonnees);
+
 	@Query(value="UPDATE reserver set date_Reserver = ?3 , statut_Reserver = ?4 where code_Randonnees = ?2 AND code_Abris = ?1", nativeQuery=true)
 	@Modifying
     @Transactional

@@ -74,25 +74,25 @@ input:checked + .slider:before {
 </style>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/compagnieDesGuides">CompagnieDesGuides</a>
+  <a class="navbar-brand" href="/CompagnieDesGuides">CompagnieDesGuides</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/compagnieDesGuides">Accueil<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/CompagnieDesGuides">Accueil<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/compagnieDesGuides/randonnees">Mes randonnées</a>
+        <a class="nav-link" href="/CompagnieDesGuides/randonnees">Mes randonnées</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Créer une nouvelle randonnée
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/compagnieDesGuides/randonnees/vallees">à partir d'une vallée</a>
-          <a class="dropdown-item" href="/compagnieDesGuides/randonnees/custom">à partir d'une randonnée vierge</a>
+          <a class="dropdown-item" href="/CompagnieDesGuides/randonnees/vallees">à partir d'une vallée</a>
+          <a class="dropdown-item" href="/CompagnieDesGuides/randonnees/custom">à partir d'une randonnée vierge</a>
         </div>
       </li>
     </ul>

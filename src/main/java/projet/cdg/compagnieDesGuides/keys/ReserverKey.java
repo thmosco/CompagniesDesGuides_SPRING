@@ -7,35 +7,35 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class ReserverKey implements Serializable {
-	@Column(name = "code_Abris")
-    int code_Abris;
+	@Column(name = "codeabris")
+    int codeabris;
 
-	@Column(name = "code_Randonnees")
-    int code_Randonnees;
-
-	public int getCode_Abris() {
-		return code_Abris;
-	}
-
-	public void setCode_Abris(int code_Abris) {
-		this.code_Abris = code_Abris;
-	}
-
-	public int getCode_Randonnees() {
-		return code_Randonnees;
-	}
-
-	public void setCode_Randonnees(int code_Randonnees) {
-		this.code_Randonnees = code_Randonnees;
-	}
+	@Column(name = "coderandonnees")
+    int coderandonnees;
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + code_Abris;
-		result = prime * result + code_Randonnees;
+		result = prime * result + codeabris;
+		result = prime * result + coderandonnees;
 		return result;
+	}
+
+	public int getCodeabris() {
+		return codeabris;
+	}
+
+	public void setCodeabris(int codeabris) {
+		this.codeabris = codeabris;
+	}
+
+	public int getCoderandonnees() {
+		return coderandonnees;
+	}
+
+	public void setCoderandonnees(int coderandonnees) {
+		this.coderandonnees = coderandonnees;
 	}
 
 	@Override
@@ -47,11 +47,18 @@ public class ReserverKey implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ReserverKey other = (ReserverKey) obj;
-		if (code_Abris != other.code_Abris)
+		if (codeabris != other.codeabris)
 			return false;
-		if (code_Randonnees != other.code_Randonnees)
+		if (coderandonnees != other.coderandonnees)
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "ReserverKey [codeabris=" + codeabris + ", coderandonnees=" + coderandonnees + "]";
+	}
+
+
 	
 }

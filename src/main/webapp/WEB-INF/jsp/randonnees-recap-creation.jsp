@@ -14,7 +14,7 @@
 
 %>
 
-<form action="/compagnieDesGuides/randonnees/creation" method="post">
+<form action="/CompagnieDesGuides/randonnees/creation" method="post">
 	<h3 class="text-center">Ma randonnée</h1>
 	<div class='form-group'>
 		<label for="Nombres de personnes">Nombres de personnes</label>

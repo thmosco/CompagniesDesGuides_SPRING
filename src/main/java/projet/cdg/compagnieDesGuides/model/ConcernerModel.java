@@ -24,12 +24,12 @@ public class ConcernerModel {
 	
 	@ManyToOne
 	@MapsId("codesommets")
-	@JoinColumn(name="code_Sommets")
+	@JoinColumn(name="code_Sommets",nullable=false)
 	SommetsModel sommets;
 	
 	@ManyToOne
 	@MapsId("coderandonnees")
-	@JoinColumn(name="code_Randonnees")
+	@JoinColumn(name="code_Randonnees",nullable=false)
 	RandonneesModel randonnees;
 	
 	@Column(name="date_Concerner")

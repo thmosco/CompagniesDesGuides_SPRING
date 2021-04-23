@@ -15,7 +15,6 @@
 <body>
 <h1>Les sommets</h1>
 	<%
-
 		Iterable<SommetsModel> sommets = (Iterable<SommetsModel>)request.getAttribute("sommets");
 
 		for (SommetsModel s:sommets){

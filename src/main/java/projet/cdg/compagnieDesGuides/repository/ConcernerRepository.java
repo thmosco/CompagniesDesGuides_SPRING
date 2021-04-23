@@ -19,9 +19,11 @@ public interface ConcernerRepository extends CrudRepository<ConcernerModel, Inte
 	@Query(value="DELETE FROM concerner where code_Randonnees = ?2 AND code_Sommets = ?1", nativeQuery=true)
 	@Modifying
     @Transactional
-	void deleteConcerner(@Param(value = "code_Sommet") int code_Abris, @Param(value = "code_Randonnees") int code_Randonnees);
+	void deleteConcerner(@Param(value = "code_Sommet") int code_Sommet, @Param(value = "code_Randonnees") int code_Randonnees);
 	
-	
+	@Query(value="SELECT count(*) FROM concerner where code_Randonnees = ?2 AND code_Sommets = ?1", nativeQuery=true)
+	int countConcerner(@Param(value = "code_Sommet") int code_Sommet, @Param(value = "code_Randonnees") int code_Randonnees);
+
 	@Query(value="UPDATE concerner set date_Concerner = ?3 where code_Randonnees = ?2 AND code_Sommets = ?1", nativeQuery=true)
 	@Modifying
     @Transactional

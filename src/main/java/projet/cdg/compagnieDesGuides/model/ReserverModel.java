@@ -20,12 +20,12 @@ public class ReserverModel {
 	ReserverKey id;
 	
 	@ManyToOne
-	@MapsId("code_Randonnees")
+	@MapsId("coderandonnees")
 	@JoinColumn(name="code_Randonnees")
 	RandonneesModel randonnees;
 	
 	@ManyToOne
-	@MapsId("code_Abris")
+	@MapsId("codeabris")
 	@JoinColumn(name="code_Abris")
 	AbrisModel abris;
 	
@@ -73,6 +73,12 @@ public class ReserverModel {
 
 	public void setId(ReserverKey id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "ReserverModel [id=" + id + ", randonnees=" + randonnees + ", abris=" + abris + ", date_Reserver="
+				+ date_Reserver + ", statut_Reserver=" + statut_Reserver + "]";
 	}
 	
 	

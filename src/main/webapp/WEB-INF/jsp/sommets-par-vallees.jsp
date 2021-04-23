@@ -8,14 +8,14 @@
 <div class="container">
 <h1 class="text-center" style='margin-top: 10%;'>Sommets disponible depuis cette Vallée</h1>
 <p>Vous pouvez choisir des sommets et des abris. Lorsque vous avez faits votre choix utiliser le boutton en bas de page "Passez au choix des dates" pour configurer votre randonnée.</p>
-	<form action='/compagnieDesGuides/randonnees/recap' method='POST'>
+	<form action='/CompagnieDesGuides/randonnees/recap' method='POST'>
 	<%
 
 		Iterable<SommetsModel> sommets = (Iterable<SommetsModel>)request.getAttribute("sommets");
 	
 		Iterable<AbrisModel> abris = (Iterable<AbrisModel>)request.getAttribute("abris");
 
-		out.print("<p>Il est possible qu'il n'y ai pas de sommets associé à cette vallées, dans ce cas vous pouvez <a href='/compagnieDesGuides/randonnees/vallees'>choisir une autre vallée</a></p>");
+		out.print("<p>Il est possible qu'il n'y ai pas de sommets associé à cette vallées, dans ce cas vous pouvez <a href='/CompagnieDesGuides/randonnees/vallees'>choisir une autre vallée</a></p>");
 	%>
 	
 	

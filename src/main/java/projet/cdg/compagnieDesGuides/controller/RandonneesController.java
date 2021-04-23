@@ -43,8 +43,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import javax.persistence.PreRemove;
-
 @RestController
 public class RandonneesController {
 	
@@ -56,6 +54,8 @@ public class RandonneesController {
 	private ReserverRepository reserverRepository;
 	@Autowired
 	private ConcernerRepository concernerRepository;
+	@Autowired
+	private SommetsRepository sommetRepository;
 	@Autowired
 	private ApplicationContext context;
 	
@@ -102,9 +102,12 @@ public class RandonneesController {
 		mav.addObject("erreur",erreur);
 		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.addObject("id",id);
+		mav.addObject("abris",abrisRepository.findAll());
+		mav.addObject("sommets",sommetRepository.findAll());
 		mav.setViewName("randonnees-all");
 		return mav;	
 	}
+	
 	@GetMapping("/randonnees-delete/{id}")
 	public ModelAndView deleteRandonnees(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView();
@@ -113,7 +116,10 @@ public class RandonneesController {
 		mav.addObject("erreur",erreur);
 		mav.addObject("randonnees",randonneesRepository.findAll());
 		mav.addObject("id",id);
-		mav.setViewName("randonnees-all");
+
+		mav.addObject("abris",abrisRepository.findAll());
+		mav.addObject("sommets",sommetRepository.findAll());
+		mav.setViewName("randonnees-all");	
 		return mav;	
 	}
 	
@@ -166,6 +172,9 @@ public class RandonneesController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("randonnees",randonneesRepository.findAll());
+		mav.addObject("abris",abrisRepository.findAll());
+		mav.addObject("sommets",sommetRepository.findAll());
+		
 		mav.setViewName("randonnees-all");
 		return mav;	
 	}
@@ -309,8 +318,8 @@ public class RandonneesController {
 						    				   
 							    				   ReserverKey reserverKey = new ReserverKey();
 							    				   
-							    				   reserverKey.setCode_Randonnees(r.getId());
-							    				   reserverKey.setCode_Abris(i);;
+							    				   reserverKey.setCoderandonnees(r.getId());
+							    				   reserverKey.setCodeabris(i);;
 						    				   
 							    				reserverAbris.setId(reserverKey);
 							    				reserverAbris.setDate_Reserver(abrisWithDate.get(i));

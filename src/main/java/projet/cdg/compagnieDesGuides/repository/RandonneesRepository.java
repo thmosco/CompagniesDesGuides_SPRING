@@ -18,5 +18,9 @@ public interface RandonneesRepository extends CrudRepository<RandonneesModel, In
     @Transactional
 	void update(@Param(value = "id") int id, @Param(value = "nbPersonne") String nbPers, @Param(value = "dateDebut") String dateDebut, @Param(value = "dateFin") String dateFin);
 
+	@Query(value="DELETE FROM randonnees where code_Randonnees = ?1", nativeQuery=true)
+	@Modifying
+    @Transactional
+	void deleteFromId(@Param(value = "id") int id);
 
 }

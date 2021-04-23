@@ -20,6 +20,8 @@
 <title>Demo Spring MVC</title>
 </head>
 <body>
+	
+	<jsp:include page="header.jsp" />
 	<h1>Mes randonnées</h1>
 	<%
 	
@@ -27,7 +29,7 @@
 		Iterable<RandonneesModel> randonnees = (Iterable<RandonneesModel>)request.getAttribute("randonnees");
 		if(request.getAttribute("erreur") != null) {out.print(request.getAttribute("erreur"));};
 		//Afficher les employés
-		out.print("<table><thead><tr><th>ID</th><th>Date de début</th><th>Date de fin</th><th>Nombres de personnes</th><th></th><th>Nom du guide</th><th>Abris</th><th>Sommets</th></tr></thead></tbody>");
+		out.print("<table class='table'><thead><tr><th>ID</th><th>Date de début</th><th>Date de fin</th><th>Nombres de personnes</th><th></th><th>Nom du guide</th><th>Abris</th><th>Sommets</th></tr></thead></tbody>");
 		for (RandonneesModel r:randonnees){
 			out.print("<tr>");
 			out.print("<td>"+r.getId()+"</td>");
@@ -40,6 +42,19 @@
 			out.print("<td>"+r.getGuide().getNom()+"</td>");
 			Set<ReserverModel> reserver = r.getReserver();
 			out.print("<td>");
+			out.print("<form action='/CompagnieDesGuides/reserver-ajout-form/"+r.getId()+"' method='post'><select name='ajoutAbris'>");
+			Iterable<AbrisModel> tousAbris = (Iterable<AbrisModel>)request.getAttribute("abris");
+			for (AbrisModel a:tousAbris){
+				out.print("<option value='"+a.getId()+"'>"+a.getNom_abris()+"</option>");
+			}
+
+			out.print("</select>");
+			out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
+			out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
+			out.print("Date Reservation : <input type='date' name='dateReservation' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
+			out.print("<input type='submit' value='Ajouter'>");
+			
+			out.print("</form><br>");
 			for (ReserverModel re:reserver) {
 				AbrisModel abris = re.getAbris();
 				out.print("Nom : " + abris.getNom_abris() + " --- ");
@@ -71,6 +86,17 @@
 			out.print("</td>");
 			Set<ConcernerModel> concerner = r.getConcerner();
 			out.print("<td>");
+			out.print("<form action='/CompagnieDesGuides/concerner-ajout-form/"+r.getId()+"' method='post'><select name='ajoutSommet'>");
+			Iterable<SommetsModel> tousSommets = (Iterable<SommetsModel>)request.getAttribute("sommets");
+			for (SommetsModel s:tousSommets){
+				out.print("<option value='"+s.getId()+"'>"+s.getNom()+ " " + s.getAltitude()+"</option>");
+			}
+			out.print("</select>");
+			out.print("<input type='date' hidden name='dateDebut' value='" + r.getDate_debut() + "'>");
+			out.print("<input type='date' hidden name='dateFin' value='" + r.getDate_fin() + "'>");
+			out.print("Date Exploration: <input type='date' name='dateConcerner' min='"+r.getDate_debut()+"' max='"+r.getDate_fin()+"'>");
+			out.print("<input type='submit' value='Ajouter'>");
+			out.print("</form><br>");
 			for (ConcernerModel co:concerner) {
 				SommetsModel sommet = co.getSommets();
 				out.print("Nom : " + sommet.getNom() + " --- ");
