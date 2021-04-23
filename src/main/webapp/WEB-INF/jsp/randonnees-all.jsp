@@ -28,7 +28,7 @@
 		//récupérer les données transmises dans la requête (objet ModelAndView)
 		Iterable<RandonneesModel> randonnees = (Iterable<RandonneesModel>)request.getAttribute("randonnees");
 		if(request.getAttribute("erreur") != null) {out.print("<div class='h5 font-weight-bold text-warning'>"+request.getAttribute("erreur")+"</div>");};
-		out.print("<table class='table'><thead><tr><th class='border h3'>Randonnées</th><th class='border h3'>Abris</th><th class='border h3'>Sommets</th></tr></thead></tbody>");
+		out.print("<table class='table'><thead><tr><th class='border h3 col-4'>Randonnées</th><th class='border h3 col-4'>Abris</th><th class='border h3 col-3'>Sommets</th><th class='col-1'></th></tr></thead>");
 		for (RandonneesModel r:randonnees){
 			out.print("<tr>");
 			out.print("<td class='border'><div class='card bg-secondary text-white mx-auto'><div class='card-header'>Randonnée "+r.getId()+"</div><div class='card-body'><form action='/CompagnieDesGuides/randonnees-update-form/"+r.getId()+"' method='post'>");
@@ -110,8 +110,9 @@
 			}
 			out.print("</td>");
 			out.print("<td><a href='/CompagnieDesGuides/randonnees-delete/"+r.getId()+"' type='button' class='btn btn-warning mt-3'>Effacer Randonnée</a></td>");
-			out.print("<tr>");
+			out.print("</tr>");
 		}
+		out.print("</table>");
 	%>
 	<jsp:include page="footer.jsp" />
 </body>
