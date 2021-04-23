@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -106,7 +107,6 @@ public class RandonneesModel {
 		return "RandonneesModel [id=" + id + ", nombres_personnes=" + nombres_personnes + ", date_debut=" + date_debut
 				+ ", date_fin=" + date_fin  + "]";
 	}
-
 	
 	
 

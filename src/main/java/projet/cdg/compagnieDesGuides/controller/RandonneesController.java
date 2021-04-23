@@ -43,6 +43,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import javax.persistence.PreRemove;
+
 @RestController
 public class RandonneesController {
 	
@@ -103,7 +105,18 @@ public class RandonneesController {
 		mav.setViewName("randonnees-all");
 		return mav;	
 	}
-
+	@GetMapping("/randonnees-delete/{id}")
+	public ModelAndView deleteRandonnees(@PathVariable int id) {
+		ModelAndView mav = new ModelAndView();
+		String erreur = "";
+		randonneesRepository.deleteById(id);
+		mav.addObject("erreur",erreur);
+		mav.addObject("randonnees",randonneesRepository.findAll());
+		mav.addObject("id",id);
+		mav.setViewName("randonnees-all");
+		return mav;	
+	}
+	
 	@PostMapping("/randonnees/recap")
 	public ModelAndView creationRecapRandonnees(@RequestParam(value="sommets", defaultValue="null") List<String> sommets,
 										@RequestParam(value="abris", defaultValue="null") List<String> abris) {
